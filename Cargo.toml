@@ -1,0 +1,23 @@
+[package]
+name = "dprint-plugin-asciidoc"
+version = "0.1.0"
+authors = ["Antigravity"]
+edition = "2021"
+license = "MIT"
+description = "AsciiDoc formatter plugin for dprint"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+acdc-parser = "0.4"
+anyhow = "1.0"
+dprint-core = { version = "0.67", features = ["wasm"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+[profile.release]
+opt-level = "s"
+lto = true
+codegen-units = 1
+panic = "abort"
