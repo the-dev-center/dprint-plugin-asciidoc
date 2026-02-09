@@ -1,0 +1,41 @@
+name: Schema Validation
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'src/**'
+      - 'schema.json'
+      - 'Cargo.toml'
+  pull_request:
+    branches: [main, master]
+    paths:
+      - 'src/**'
+      - 'schema.json'
+      - 'Cargo.toml'
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  validate-schema:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache dependencies
+        uses: Swatinem/rust-cache@v2
+
+      - name: Generate schema
+        run: cargo run --bin generate-schema > /tmp/generated_schema.json
+
+      - name: Compare schemas
+        run: |
+          if ! diff -u schema.json /tmp/generated_schema.json; then
+            echo "::error::schema.json is out of date. Run 'cargo run --bin generate-schema > schema.json' to update it."
+            exit 1
+          fi
+          echo "Schema is up to date!"
