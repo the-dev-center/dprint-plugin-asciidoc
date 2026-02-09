@@ -1,0 +1,91 @@
+name: NPM Publish
+
+on:
+  push:
+    branches: [main, master]
+    tags:
+      - 'v*'
+  pull_request:
+    branches: [main, master]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build-and-publish:
+    name: Build and Publish to NPM
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - name: Cache Cargo dependencies
+        uses: Swatinem/rust-cache@v2
+
+      - name: Build WASM plugin
+        run: cargo build --release --target wasm32-unknown-unknown
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install Node dependencies
+        working-directory: ./npm
+        run: npm ci
+
+      - name: Update package version
+        working-directory: ./npm
+        run: |
+          VERSION=${GITHUB_REF_NAME#v}
+          npm version $VERSION --no-git-tag-version
+
+      - name: Copy WASM to npm package
+        run: |
+          cp target/wasm32-unknown-unknown/release/dprint_plugin_asciidoc.wasm npm/dprint_plugin_asciidoc.wasm
+
+      - name: Publish to NPM (dry-run for PRs/dev)
+        if: github.event_name == 'pull_request' || (github.event_name == 'push' && !startsWith(github.ref, 'refs/tags/'))
+        working-directory: ./npm
+        run: npm publish --access public --dry-run
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish to NPM (production)
+        if: startsWith(github.ref, 'refs/tags/')
+        working-directory: ./npm
+        run: npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create NPM package tarball
+        if: startsWith(github.ref, 'refs/tags/')
+        working-directory: ./npm
+        run: npm pack
+
+      - name: Upload NPM tarball to release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            npm/*.tgz
+          append_body: true
+          body: |
+            
+            ## NPM Package
+            
+            This release is also available on npm:
+            ```bash
+            npm install dprint-plugin-asciidoc
+            ```
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
