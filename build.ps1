@@ -8,7 +8,7 @@ if ($?) {
     Write-Output --Color Green "WASM file: target/wasm32-unknown-unknown/release/dprint_plugin_asciidoc.wasm"
 
     Write-Output --Color Green "Generating schema.json..."
-    cargo run > schema.json
+    cargo run --bin generate-schema > schema.json
     if ($?) {
         Write-Output --Color Green "Schema generated: schema.json"
     } else {
