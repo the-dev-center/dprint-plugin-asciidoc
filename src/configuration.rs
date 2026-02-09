@@ -1,15 +1,31 @@
+use schemars::JsonSchema;
 use serde::{Serialize, Deserialize};
+
 pub use dprint_core::configuration::{GlobalConfiguration, NewLineKind, ConfigurationDiagnostic};
 pub use dprint_core::plugins::{PluginResolveConfigurationResult, FileMatchingInfo};
 
-#[derive(Clone, Serialize, Deserialize)]
+#[derive(Clone, Serialize, Deserialize, JsonSchema)]
 #[serde(rename_all = "camelCase")]
+#[schemars(rename_all = "camelCase")]
 pub struct Configuration {
+    /// The width of a line the printer will try to stay under. Note that the printer may exceed this width in some cases.
+    #[schemars(default = "default_line_width")]
     pub line_width: u32,
+    /// The number of characters for an indent.
+    #[schemars(default = "default_indent_width")]
     pub indent_width: u8,
+    /// Whether to use tabs (true) or spaces (false).
+    #[schemars(default = "default_use_tabs")]
     pub use_tabs: bool,
+    /// The kind of newline to use.
+    #[schemars(default = "default_new_line_kind", with = "String")]
     pub new_line_kind: NewLineKind,
 }
+
+fn default_line_width() -> u32 { 80 }
+fn default_indent_width() -> u8 { 2 }
+fn default_use_tabs() -> bool { false }
+fn default_new_line_kind() -> NewLineKind { NewLineKind::LineFeed }
 
 pub fn resolve_config(config: serde_json::Value, global_config: &GlobalConfiguration) -> PluginResolveConfigurationResult<Configuration> {
     let mut diagnostics = Vec::new();

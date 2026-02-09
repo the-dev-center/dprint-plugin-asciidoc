@@ -1,9 +1,11 @@
-mod configuration;
-mod format;
+pub mod configuration;
+pub mod format;
 
 use configuration::{Configuration, resolve_config};
 use dprint_core::configuration::ConfigKeyMap;
 use dprint_core::plugins::{PluginInfo, SyncPluginHandler, SyncFormatRequest, SyncHostFormatRequest, FormatResult, PluginResolveConfigurationResult, CheckConfigUpdatesMessage, ConfigChange};
+
+#[cfg(target_arch = "wasm32")]
 use dprint_core::generate_plugin_code;
 
 struct AsciiDocPluginHandler;
@@ -52,7 +54,17 @@ impl AsciiDocPluginHandler {
     }
 }
 
+#[cfg(target_arch = "wasm32")]
 generate_plugin_code!(AsciiDocPluginHandler, AsciiDocPluginHandler::new());
 
 #[cfg(not(target_arch = "wasm32"))]
+fn main() {
+    use std::io::stdout;
+    use schemars::schema_for;
+
+    let schema = schema_for!(Configuration);
+    serde_json::to_writer_pretty(stdout(), &schema).unwrap();
+}
+
+#[cfg(target_arch = "wasm32")]
 fn main() {}

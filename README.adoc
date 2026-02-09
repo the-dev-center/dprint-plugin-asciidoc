@@ -63,6 +63,10 @@ You can configure the plugin in the `asciidoc` object of your `dprint.jsonc`:
 | The type of newline character to use (`"lf"`, `"crlf"`, or `"system"`).
 |===
 
+=== Schema
+
+The configuration schema is available at link:schema.json[schema.json]. This file is used to generate documentation and provide intelligent code completion in editors.
+
 == Development
 
 === Build

@@ -2,18 +2,11 @@
   "incremental": true,
   "indentWidth": 2,
   "lineWidth": 120,
-  "typescript": {
-    "quoteStyle": "preferSingle",
-    "semiColons": "asi",
-    "trailingCommas": "es5"
-  },
   "json": {
-    "trailingCommas": "jsonc"
+    "trailingCommas": "jsonc",
   },
   "markdown": {},
   "toml": {},
-  "malva": {},
-  "dockerfile": {},
   "excludes": [
     "**/node_modules",
     "**/*-lock.json",
@@ -24,5 +17,9 @@
     "https://plugins.dprint.dev/json-0.21.1.wasm",
     "https://plugins.dprint.dev/markdown-0.20.0.wasm",
     "https://plugins.dprint.dev/toml-0.7.0.wasm",
+    "file:///z:/code/the-dev-center/dprint-plugin-asciidoc/target/wasm32-unknown-unknown/release/dprint_plugin_asciidoc.wasm",
   ],
+  "asciidoc": {
+    "lineWidth": 120,
+  },
 }
