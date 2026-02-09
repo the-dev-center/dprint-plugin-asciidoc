@@ -7,11 +7,20 @@ An link:https://dprint.dev[dprint] plugin for link:https://asciidoc.org[AsciiDoc
 
 toc::[]
 
+== Documentation Files
+
+This repository contains two README files with distinct purposes:
+
+* `README.adoc` (this file) — The main project documentation covering development, building from source, and comprehensive usage
+* `npm/README.md` — Consumer-focused documentation for the npm package at https://www.npmjs.com/package/dprint-plugin-asciidoc
+
 == Overview
 
 This plugin provides formatting for AsciiDoc files using dprint. It uses the link:https://github.com/scouten/asciidoc-parser[asciidoc-parser] crate for parsing and validation.
 
 == Installation
+
+=== Via URL (Recommended)
 
 To use this plugin, add it to your `dprint.jsonc` file:
 
@@ -23,6 +32,28 @@ To use this plugin, add it to your `dprint.jsonc` file:
   ]
 }
 ----
+
+=== Via NPM
+
+The plugin is also available as an npm package:
+
+[source,bash]
+----
+npm install --save-dev dprint-plugin-asciidoc
+----
+
+Then reference it in your `dprint.jsonc`:
+
+[source,jsonc]
+----
+{
+  "plugins": [
+    "node_modules/dprint-plugin-asciidoc/dprint_plugin_asciidoc.wasm"
+  ]
+}
+----
+
+See link:npm/README.md[npm/README.md] for consumer-focused npm documentation.
 
 == Configuration
 
