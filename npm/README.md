@@ -1,6 +1,6 @@
 dprint-plugin-asciidoc\npm\README.md
-```
 
+````
 ```markdown
 <!-- 
   Npm Store Page README
@@ -33,7 +33,7 @@ dprint-plugin-asciidoc\npm\README.md
 
 ```bash
 npm install --save-dev dprint-plugin-asciidoc
-```
+````
 
 Or with yarn:
 
@@ -67,12 +67,12 @@ Add the plugin to your `dprint.json` configuration:
 
 ## Configuration Options
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `lineWidth` | `number` | `80` | Maximum line width |
-| `indentWidth` | `number` | `2` | Number of spaces per indent |
-| `useTabs` | `boolean` | `false` | Use tabs instead of spaces |
-| `newLineKind` | `"lf" \| "crlf" \| "system"` | `"lf"` | Newline character style |
+| Option        | Type                         | Default | Description                 |
+| ------------- | ---------------------------- | ------- | --------------------------- |
+| `lineWidth`   | `number`                     | `80`    | Maximum line width          |
+| `indentWidth` | `number`                     | `2`     | Number of spaces per indent |
+| `useTabs`     | `boolean`                    | `false` | Use tabs instead of spaces  |
+| `newLineKind` | `"lf" \| "crlf" \| "system"` | `"lf"`  | Newline character style     |
 
 ## Formatting Files
 
