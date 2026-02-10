@@ -1,7 +1,3 @@
-dprint-plugin-asciidoc\npm\install.js
-```
-
-```javascript
 #!/usr/bin/env node
 
 /**
@@ -26,9 +22,9 @@ const DOWNLOAD_URL = `https://github.com/the-dev-center/dprint-plugin-asciidoc/r
 function downloadFile(url, dest) {
   return new Promise((resolve, reject) => {
     console.log(`Downloading WASM plugin from ${url}...`);
-    
+
     const file = fs.createWriteStream(dest);
-    
+
     https.get(url, (response) => {
       if (response.statusCode === 301 || response.statusCode === 302) {
         // Follow redirects
@@ -37,14 +33,14 @@ function downloadFile(url, dest) {
         downloadFile(response.headers.location, dest).then(resolve).catch(reject);
         return;
       }
-      
+
       if (response.statusCode !== 200) {
         reject(new Error(`Download failed with status code ${response.statusCode}`));
         return;
       }
-      
+
       response.pipe(file);
-      
+
       file.on('finish', () => {
         file.close();
         console.log(`WASM plugin downloaded successfully to ${dest}`);
