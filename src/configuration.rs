@@ -1,8 +1,8 @@
 use schemars::JsonSchema;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-pub use dprint_core::configuration::{GlobalConfiguration, NewLineKind, ConfigurationDiagnostic};
-pub use dprint_core::plugins::{PluginResolveConfigurationResult, FileMatchingInfo};
+pub use dprint_core::configuration::{ConfigurationDiagnostic, GlobalConfiguration, NewLineKind};
+pub use dprint_core::plugins::{FileMatchingInfo, PluginResolveConfigurationResult};
 
 #[derive(Clone, Serialize, Deserialize, JsonSchema)]
 #[serde(rename_all = "camelCase")]
@@ -22,20 +22,51 @@ pub struct Configuration {
     pub new_line_kind: NewLineKind,
 }
 
-fn default_line_width() -> u32 { 80 }
-fn default_indent_width() -> u8 { 2 }
-fn default_use_tabs() -> bool { false }
-fn default_new_line_kind() -> NewLineKind { NewLineKind::LineFeed }
+fn default_line_width() -> u32 {
+    80
+}
+fn default_indent_width() -> u8 {
+    2
+}
+fn default_use_tabs() -> bool {
+    false
+}
+fn default_new_line_kind() -> NewLineKind {
+    NewLineKind::LineFeed
+}
 
-pub fn resolve_config(config: serde_json::Value, global_config: &GlobalConfiguration) -> PluginResolveConfigurationResult<Configuration> {
+pub fn resolve_config(
+    config: serde_json::Value,
+    global_config: &GlobalConfiguration,
+) -> PluginResolveConfigurationResult<Configuration> {
     let mut diagnostics = Vec::new();
     let mut config = config;
 
     let resolved_config = Configuration {
-        line_width: get_value(&mut config, "lineWidth", global_config.line_width.unwrap_or(80), &mut diagnostics),
-        indent_width: get_value(&mut config, "indentWidth", global_config.indent_width.unwrap_or(2), &mut diagnostics),
-        use_tabs: get_value(&mut config, "useTabs", global_config.use_tabs.unwrap_or(false), &mut diagnostics),
-        new_line_kind: get_value(&mut config, "newLineKind", global_config.new_line_kind.clone().unwrap_or(NewLineKind::LineFeed), &mut diagnostics),
+        line_width: get_value(
+            &mut config,
+            "lineWidth",
+            global_config.line_width.unwrap_or(80),
+            &mut diagnostics,
+        ),
+        indent_width: get_value(
+            &mut config,
+            "indentWidth",
+            global_config.indent_width.unwrap_or(2),
+            &mut diagnostics,
+        ),
+        use_tabs: get_value(
+            &mut config,
+            "useTabs",
+            global_config.use_tabs.unwrap_or(false),
+            &mut diagnostics,
+        ),
+        new_line_kind: get_value(
+            &mut config,
+            "newLineKind",
+            global_config.new_line_kind.unwrap_or(NewLineKind::LineFeed),
+            &mut diagnostics,
+        ),
     };
 
     PluginResolveConfigurationResult {

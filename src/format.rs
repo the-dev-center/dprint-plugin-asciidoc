@@ -17,7 +17,7 @@ pub fn format_text(text: &str, config: &Configuration) -> anyhow::Result<Option<
     formatted = ensure_trailing_newline(&formatted);
 
     // Convert to target line endings as the LAST step
-    formatted = convert_line_endings(&formatted, config.new_line_kind.clone());
+    formatted = convert_line_endings(&formatted, config.new_line_kind);
 
     // Only return Some if the text actually changed
     if formatted == text {

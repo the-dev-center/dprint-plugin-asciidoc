@@ -1,6 +1,6 @@
-use std::io::stdout;
-use schemars::schema_for;
 use dprint_plugin_asciidoc::configuration::Configuration;
+use schemars::schema_for;
+use std::io::stdout;
 
 fn main() {
     let schema = schema_for!(Configuration);
