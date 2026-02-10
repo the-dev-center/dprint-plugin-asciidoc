@@ -1,24 +1,20 @@
-dprint-plugin-asciidoc\npm\README.md
-
-````
-```markdown
-<!-- 
+<!--
   Npm Store Page README
   =====================
-  
+
   This README.md is specifically designed for the npm package page at:
   https://www.npmjs.com/package/dprint-plugin-asciidoc
-  
+
   Purpose:
   --------
   - Provide npm users with installation and usage instructions
   - Document the dprint plugin integration for AsciiDoc files
   - Offer a quick start guide for JavaScript/Node.js developers
-  
+
   For the main project documentation and development guide, see:
   https://github.com/the-dev-center/dprint-plugin-asciidoc/blob/main/README.adoc
-  
-  Note: This file is published to npm and should remain focused on 
+
+  Note: This file is published to npm and should remain focused on
   consumer usage, not development/build instructions.
 -->
 
@@ -33,7 +29,7 @@ dprint-plugin-asciidoc\npm\README.md
 
 ```bash
 npm install --save-dev dprint-plugin-asciidoc
-````
+```
 
 Or with yarn:
 
