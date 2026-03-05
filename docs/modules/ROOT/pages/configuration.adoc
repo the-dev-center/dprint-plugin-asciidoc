@@ -1,0 +1,39 @@
+= Configuration
+:navtitle: Configuration
+
+Configure the plugin in the `asciidoc` object of your `dprint.jsonc`:
+
+[source,jsonc]
+----
+{
+  "asciidoc": {
+    "lineWidth": 80,
+    "indentWidth": 2,
+    "useTabs": false,
+    "newLineKind": "lf"
+  }
+}
+----
+
+== Options
+
+[cols="1,1,2"]
+|===
+| Property | Default | Description
+
+| `lineWidth`
+| `80`
+| Maximum number of characters per line.
+
+| `indentWidth`
+| `2`
+| Number of spaces for indentation.
+
+| `useTabs`
+| `false`
+| Use tabs for indentation.
+
+| `newLineKind`
+| `"lf"`
+| Newline character: `"lf"`, `"crlf"`, or `"system"`.
+|===

@@ -1,0 +1,43 @@
+= dprint-plugin-asciidoc
+:navtitle: Introduction
+
+A https://dprint.dev[dprint] plugin for https://asciidoc.org[AsciiDoc] files.
+
+== Overview
+
+This plugin provides formatting for AsciiDoc files using dprint. It uses the https://github.com/scouten/asciidoc-parser[asciidoc-parser] crate for parsing and validation.
+
+== Installation
+
+=== Via URL (recommended)
+
+Add to your `dprint.jsonc`:
+
+[source,jsonc]
+----
+{
+  "plugins": [
+    "https://plugins.dprint.dev/asciidoc-0.1.0.wasm"
+  ]
+}
+----
+
+=== Via npm
+
+[source,bash]
+----
+npm install --save-dev dprint-plugin-asciidoc
+----
+
+Then in `dprint.jsonc`:
+
+[source,jsonc]
+----
+{
+  "plugins": [
+    "node_modules/dprint-plugin-asciidoc/dprint_plugin_asciidoc.wasm"
+  ]
+}
+----
+
+See the repository link:https://github.com/antora-supplemental/dprint-plugin-asciidoc[README] for full documentation, configuration options, and development.

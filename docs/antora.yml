@@ -1,0 +1,6 @@
+name: dprint-asciidoc
+title: dprint-plugin-asciidoc
+version: ~
+start_page: ROOT:index.adoc
+nav:
+  - modules/ROOT/nav.adoc
